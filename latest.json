@@ -1,0 +1,14 @@
+{
+  "schema": "ETF_GPT_COMPACT_SNAPSHOT_V1",
+  "status": "READY_FOR_AUTOMATIC_UPLOAD",
+  "objectiveNumbersOnly": true,
+  "meta": {
+    "generatedAt": null,
+    "marketDate": null,
+    "source": "ETF Analyzer -> Cloudflare Worker/KV -> GitHub",
+    "universeCount": 0,
+    "successCount": 0,
+    "failureCount": 0
+  },
+  "etfs": []
+}
