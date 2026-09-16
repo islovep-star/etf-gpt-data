@@ -1,0 +1,103 @@
+{
+  "schema": "GPT_ETF_RULES_V1",
+  "version": "1.0.4",
+  "updatedAt": "2026-09-17",
+  "sourceFiles": {
+    "marketSnapshot": "latest.json",
+    "rules": "gpt-rules.json"
+  },
+  "rulePriority": {
+    "explicitFutureInstruction": "highest",
+    "conflictPolicy": "newer explicit user rule overrides older conflicting rule",
+    "updateTrigger": ["앞으로 이렇게 적용해", "앞으로는 이렇게 해", "이 규칙으로 적용해", "규칙에 추가해"]
+  },
+  "programVsGpt": {
+    "programWorker": "objective numeric data and deterministic calculations only",
+    "gpt": "interpretation, comparison, stability/risk judgement, timing and portfolio action",
+    "forbidProgramSemanticJudgement": true
+  },
+  "dataPolicy": {
+    "primarySnapshot": "latest.json",
+    "verifySnapshotVersion": true,
+    "verifyMarketAsOf": true,
+    "verifyPerEtfDailyAsOf": true,
+    "verifyPerEtfWeeklyAsOf": true,
+    "marketAsOfMeaning": "latest observed daily date, not snapshot generation timestamp and not majority date",
+    "staleEtfPolicy": "If dailyAsOf is older than marketAsOf, mark the ETF as stale and do not describe its daily data as latest.",
+    "compactSnapshotPolicy": "Keep full-universe snapshot lightweight but retain one latest objective numeric frame per timeframe.",
+    "detailedHistory": "Use Worker gpt-data or program raw data on demand when compact snapshot is insufficient.",
+    "universeCaveat": "Do not describe NAVER_FINANCE_ETF_LIST universe as independently verified official all-KRX ETF universe."
+  },
+  "referenceVerification": {
+    "referenceSymbol": "379810",
+    "referenceName": "KODEX 미국나스닥100",
+    "afterProgramOrSnapshotChange": true,
+    "minimumChecks": ["date", "close", "volume", "MA5", "MA10", "MA20", "RSI14", "MACD", "MACD_SIGNAL", "MACD_HIST", "OBV", "OBV_SIGNAL20", "ATR14", "ATR14_PCT", "VOLUME_MA5", "VOLUME_MA20", "VOLUME_MA60"],
+    "comparisonPolicy": "Compare program raw data and GitHub snapshot using the same as-of date and calculation definition. Do not claim verification for fields not directly inspected."
+  },
+  "candidatePolicy": {
+    "newCandidateDomesticUnderlyingOnly": true,
+    "existingOverseasHoldingsCanBeAnalyzed": true,
+    "excludedNewCandidateSymbols": ["314250", "481180", "280320", "418670", "0050E0", "0041D0", "488210"],
+    "avoidStaleCandidateBias": true,
+    "compareFreshFullUniverse": true,
+    "checkSectorDuplication": true,
+    "shortHistoryRaisesUncertainty": true
+  },
+  "accountArchitecture": {
+    "DC": "Nasdaq100 Core + safety assets",
+    "IRP": "S&P500 Core + safety assets",
+    "pensionSavings": "active/rotational thematic/trend; new candidates domestic-underlying only",
+    "DCIRPSafetyTargetPct": 30,
+    "pensionLeverageExcluded": true,
+    "nonCoreExit": "Do not force immediate liquidation; reduce gradually on trend improvement/rebound and rotate proceeds toward account Core.",
+    "saleAndCoreBuyTimingMayDiffer": true
+  },
+  "indicatorPolicy": {
+    "MA5": "fast sensor / exact timing",
+    "MA10": "primary short-term trend axis",
+    "MA20": "pullback support and trend-damage confirmation",
+    "MA60Plus": "medium/long-term structure",
+    "healthyUptrendReference": "price > MA5 > MA10 > MA20",
+    "ma5BreakAloneIsNotSell": true,
+    "seriousWeaknessSequence": "MA5 break -> MA10 break -> failed MA10 reclaim + OBV decline + MACD down",
+    "neverTradeOnlyOnMA5MA10Cross": true
+  },
+  "output": {
+    "holdingsColumns": ["현재 판단", "코드·종목명·계좌", "안정성/위험도", "지금 행동", "다음 조건"],
+    "candidateColumns": ["현재 판단", "코드·종목명", "안정성/위험도", "지금 행동", "다음 조건"],
+    "stabilityRiskNumeric": true,
+    "tickerVerifiedNameRequired": true,
+    "accountRequiredForHoldings": true,
+    "neverCollapseHoldings": true,
+    "noNumericRankColumn": true,
+    "candidateOrder": "GPT attractiveness without displaying a rank score column",
+    "colors": {
+      "defensiveHold": "⚫",
+      "immediateAction": "🔵",
+      "buyWaitOrNear": "🟢",
+      "observe": "🟡",
+      "reduceObserve": "🟠"
+    },
+    "forbiddenZeroAmountPhrases": ["대기(0원)", "유지(0원)"],
+    "actionRequiresExactKRWPercentAndDenominator": true
+  },
+  "preOutputChecklist": [
+    "Read gpt-rules.json before ETF analysis.",
+    "Read current latest.json and verify snapshotVersion/status.",
+    "Use marketAsOf as market data date, not generatedAt.",
+    "Check each important holding/candidate dailyAsOf against marketAsOf and flag stale data.",
+    "After data-structure changes, cross-check 379810 before relying on the new fields.",
+    "Use verified ticker + exact name; never guess names.",
+    "List every holding individually; never collapse holdings into 기타 종목.",
+    "Keep holdings and new candidates separate.",
+    "Apply domestic-underlying filter to new candidates.",
+    "Show numeric stability/risk and exact action amounts when an action is proposed."
+  ],
+  "updates": [
+    {"id":"U001","date":"2026-09-16","instruction":"방어보유는 까만색으로 하자","change":"defensiveHold color changed to ⚫","status":"active"},
+    {"id":"U002","date":"2026-09-16","instruction":"앞으로 이렇게 적용해라고 정한 규칙은 업데이트 항목에 추가","change":"Explicit future-application instructions append to update history and become active rules; newer explicit rules override conflicts.","status":"active"},
+    {"id":"U003","date":"2026-09-17","instruction":"Snapshot 생성시간이 아니라 실제 데이터 기준일을 검증","change":"Verify marketAsOf and per-ETF dailyAsOf/weeklyAsOf; stale daily data is not treated as latest.","status":"active"},
+    {"id":"U004","date":"2026-09-17","instruction":"나스닥으로 검증해봐","change":"Use 379810 KODEX 미국나스닥100 as a reference cross-check after program/snapshot structural changes, including latest numeric indicators and dates.","status":"active"}
+  ]
+}
