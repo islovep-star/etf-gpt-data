@@ -1,103 +1,103 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "updatedAt": "2026-09-17",
-  "sourceFiles": {
-    "marketSnapshot": "latest.json",
-    "rules": "gpt-rules.json"
+  "sourceFiles": {"fullRaw":"FULL_RAW chunk set + manifest","marketIndex":"latest.json","rules":"gpt-rules.json"},
+  "ruleGovernance": {
+    "principle":"All rules may be changed, but higher-level rules require stronger review and cannot be changed automatically by lower-level rules.",
+    "levels": {
+      "L0_FOUNDATION":"System foundations: data integrity, role separation, rule governance. Changeable only after full impact/invariant/regression review and explicit user confirmation of the foundation change.",
+      "L1_STRATEGIC":"Long-term account/portfolio policy. Changeable, but not automatically because of short-term market signals or L2/L3 rules.",
+      "L2_ANALYTICAL":"Market/sector/ETF analysis methods. Actively improvable when evidence/data/methods improve.",
+      "L3_TACTICAL":"Entry, exit and execution details. Most flexible, but constrained by L0-L2.",
+      "STATE":"Current market interpretation; never promoted to a persistent rule automatically.",
+      "DATA":"Objective facts/numbers; separate from RULE and STATE. Conflicting evidence is preserved, not deleted to fit a conclusion."
+    },
+    "ruleStrength":{"HARD":"structural constraint","GATE":"must-pass condition before relying on analysis","EVIDENCE":"one input among multiple pieces of evidence"},
+    "lowerLevelCannotAutoRewriteHigherLevel":true,
+    "automaticUpwardPromotionForbidden":true,
+    "higherLevelChangeEscalation":"If a lower-level rule reveals a possible higher-level problem, flag it for separate higher-level review rather than rewriting it.",
+    "newRuleWorkflow":["classify RULE vs STATE vs DATA","assign level and strength","define purpose/scope","permission check against higher levels","conflict check including direct/order/condition/account/data-definition/output conflicts","duplicate and containment check","dependency check","impact analysis","decide ADD/KEEP/MODIFY/MERGE/RETIRE","define confirmation and invalidation conditions when applicable","check required data AVAILABLE/PARTIAL/MISSING","classify implementation GPT_ONLY/DATA_ADDITION/CALCULATION_CHANGE/SCHEMA_CHANGE","check invariants","run regression checks appropriate to affected scope","re-run full contradiction/dependency audit","verify no unintended higher-level change","record history/reason/affected rules","activate and version only after checks pass"],
+    "changeActions":["ADD","KEEP","MODIFY","MERGE","RETIRE"],
+    "retirementPolicy":"Do not erase retired rules from history; mark retired and record replacedBy/reason.",
+    "minimumChangePrinciple":"Change only rules actually affected; do not rewrite unrelated policy.",
+    "activationGate":"Do not activate a rule when unresolved conflicts, broken dependencies, unsupported required data, or unintended higher-level changes remain.",
+    "finalAuditTargets":{"unresolvedConflicts":0,"unnecessaryDuplicates":0,"unplacedRules":0,"brokenDependencies":0,"activeRulesWithMissingRequiredData":0,"replacedRulesStillActive":0},
+    "historyMetadata":["id","level","action","purpose","reason","dependsOn","affects","replacesOrReplacedBy","requiredData","validation","date","status"]
   },
-  "rulePriority": {
-    "explicitFutureInstruction": "highest",
-    "conflictPolicy": "newer explicit user rule overrides older conflicting rule",
-    "updateTrigger": ["앞으로 이렇게 적용해", "앞으로는 이렇게 해", "이 규칙으로 적용해", "규칙에 추가해"]
-  },
-  "programVsGpt": {
-    "programWorker": "objective numeric data and deterministic calculations only",
-    "gpt": "interpretation, comparison, stability/risk judgement, timing and portfolio action",
-    "forbidProgramSemanticJudgement": true
+  "foundationRules": {
+    "level":"L0_FOUNDATION",
+    "dataIntegrityFirst":true,
+    "fullRawPreservation":"Preserve full original analytical raw/history without shrinking or silently dropping fields for transport/storage convenience; transport may be chunked without semantic loss.",
+    "fullRawIntegrity":"A FULL RAW generation becomes valid only after all expected chunks are present and manifest/integrity verification succeeds; incomplete staging data must not replace the last valid source.",
+    "programVsGpt":{"programWorker":"objective numeric data and deterministic calculations only","gpt":"interpretation, comparison, stability/risk judgement, timing and portfolio action","forbidProgramSemanticJudgement":true},
+    "ruleStateDataSeparation":true,
+    "unverifiedNotVerified":"Never describe unverified fields/data as verified.",
+    "staleNotLatest":"Never describe stale data as latest.",
+    "preserveConflictingEvidence":"Opposing DATA/EVIDENCE across timeframes or scopes must remain visible and be reconciled in interpretation, not deleted.",
+    "singleIndicatorNotDecisive":"No single technical indicator alone determines buy/sell.",
+    "coreVsShortTerm":"Long-term Core policy is not automatically overturned by a short-term signal."
   },
   "dataPolicy": {
-    "primarySnapshot": "latest.json",
-    "verifySnapshotVersion": true,
-    "verifyMarketAsOf": true,
-    "verifyPerEtfDailyAsOf": true,
-    "verifyPerEtfWeeklyAsOf": true,
-    "marketAsOfMeaning": "latest observed daily date, not snapshot generation timestamp and not majority date",
-    "staleEtfPolicy": "If dailyAsOf is older than marketAsOf, mark the ETF as stale and do not describe its daily data as latest.",
-    "compactSnapshotPolicy": "Keep full-universe snapshot lightweight but retain one latest objective numeric frame per timeframe.",
-    "detailedHistory": "Use Worker gpt-data or program raw data on demand when compact snapshot is insufficient.",
-    "universeCaveat": "Do not describe NAVER_FINANCE_ETF_LIST universe as independently verified official all-KRX ETF universe."
+    "sourceOfTruth":"verified FULL RAW history when detailed historical evidence is required",
+    "marketIndexRole":"latest.json is a lightweight full-universe fast-scan/index, not the sole source of truth for detailed history.",
+    "manifestRole":"manifest/integrity metadata verifies completeness of FULL RAW chunk set.",
+    "verifySnapshotVersion":true,"verifyMarketAsOf":true,"verifyPerEtfDailyAsOf":true,"verifyPerEtfWeeklyAsOf":true,
+    "marketAsOfMeaning":"latest observed daily date, not snapshot generation timestamp and not majority date",
+    "staleEtfPolicy":"If dailyAsOf is older than marketAsOf, mark the ETF as stale and do not describe its daily data as latest.",
+    "compactSnapshotPolicy":"Keep full-universe index lightweight for screening; use verified FULL RAW/history for detailed money-flow and historical analysis.",
+    "universeCaveat":"Do not describe NAVER_FINANCE_ETF_LIST universe as independently verified official all-KRX ETF universe."
   },
   "referenceVerification": {
-    "referenceSymbol": "379810",
-    "referenceName": "KODEX 미국나스닥100",
-    "afterProgramOrSnapshotChange": true,
-    "minimumChecks": ["date", "close", "volume", "MA5", "MA10", "MA20", "RSI14", "MACD", "MACD_SIGNAL", "MACD_HIST", "OBV", "OBV_SIGNAL20", "ATR14", "ATR14_PCT", "VOLUME_MA5", "VOLUME_MA20", "VOLUME_MA60"],
-    "comparisonPolicy": "Compare program raw data and GitHub snapshot using the same as-of date and calculation definition. Do not claim verification for fields not directly inspected."
-  },
-  "candidatePolicy": {
-    "newCandidateDomesticUnderlyingOnly": true,
-    "existingOverseasHoldingsCanBeAnalyzed": true,
-    "excludedNewCandidateSymbols": ["314250", "481180", "280320", "418670", "0050E0", "0041D0", "488210"],
-    "avoidStaleCandidateBias": true,
-    "compareFreshFullUniverse": true,
-    "checkSectorDuplication": true,
-    "shortHistoryRaisesUncertainty": true
+    "level":"L0_FOUNDATION","referenceSymbol":"379810","referenceName":"KODEX 미국나스닥100",
+    "trigger":"Run reference numeric cross-check after CALCULATION_CHANGE or SCHEMA_CHANGE affecting these fields; transport integrity alone is verified by manifest/hash and does not require repeating the full reference check.",
+    "minimumChecks":["date","close","volume","MA5","MA10","MA20","RSI14","MACD","MACD_SIGNAL","MACD_HIST","OBV","OBV_SIGNAL20","ATR14","ATR14_PCT","VOLUME_MA5","VOLUME_MA20","VOLUME_MA60"],
+    "comparisonPolicy":"Compare program raw data and published data using the same as-of date and calculation definition. Do not claim verification for fields not directly inspected.",
+    "regressionExpansion":"For broad analytical changes, use additional representative cases as needed (domestic index, strong sector, weak sector, defensive asset, short-history case) after verifying their suitability; do not permanently assign arbitrary symbols without validation."
   },
   "accountArchitecture": {
-    "DC": "Nasdaq100 Core + safety assets",
-    "IRP": "S&P500 Core + safety assets",
-    "pensionSavings": "active/rotational thematic/trend; new candidates domestic-underlying only",
-    "DCIRPSafetyTargetPct": 30,
-    "pensionLeverageExcluded": true,
-    "nonCoreExit": "Do not force immediate liquidation; reduce gradually on trend improvement/rebound and rotate proceeds toward account Core.",
-    "saleAndCoreBuyTimingMayDiffer": true
+    "level":"L1_STRATEGIC","DC":"Nasdaq100 Core + safety assets","IRP":"S&P500 Core + safety assets","pensionSavings":"active/rotational thematic/trend; new candidates domestic-underlying only","DCIRPSafetyTargetPct":30,"pensionLeverageExcluded":true,
+    "nonCoreExit":"Do not force immediate liquidation; reduce gradually on trend improvement/rebound and rotate proceeds toward account Core.","saleAndCoreBuyTimingMayDiffer":true,
+    "changeProtection":"L2/L3 signals may adjust timing/intensity within this policy but cannot automatically rewrite the strategic account architecture."
+  },
+  "marketMoneyFlow": {
+    "level":"L2_ANALYTICAL","strength":"EVIDENCE","active":true,
+    "analysisOrder":["full-universe inflow and outflow scan","market breadth","sector/subsector money-flow clusters","holdings outflow/risk review","candidate discovery inside strengthening/early-flow areas","individual ETF timing","external explanation cross-check"],
+    "signals":["abnormal volume versus rolling baseline","large volume during declines","price defense after high-volume decline","repeated high volume during sideways consolidation","OBV accumulation/divergence","up/down volume imbalance","sector/subsector synchronization and breadth","leader versus laggard behavior within strengthening sector"],
+    "absorptionGuard":"A high-volume decline alone is not accumulation. Confidence rises only with subsequent low/retest defense, selling-volume contraction, OBV stabilization/rise, and/or short-MA recovery.",
+    "distributionEvidence":["high volume near highs with limited price progress","repeated failed highs","down-day volume expands while up-day volume contracts","OBV lower highs or deterioration versus signal","price breaks MA5 then MA10 and fails reclaim","sector peers synchronously weaken"],
+    "invalidation":"If support/retest fails with renewed expanding sell volume and OBV deterioration, weaken or reject the absorption hypothesis.",
+    "breadth":"Measure strengthening versus weakening sectors and distinguish concentrated leadership, rotation, and broad risk-off.",
+    "indexBreadth":{"KOREA":"Domestic sector ETFs may proxy internal breadth for KOSPI/KOSPI200.","US":"For Nasdaq100/S&P500, prioritize reliable underlying US market/sector breadth; Korean-listed US-sector ETF flow is secondary because domestic investor/LP effects can distort it."},
+    "coreUse":"Breadth is a timing/risk-intensity filter for long-term Core, not an automatic full-liquidation rule.",
+    "holdingsContext":"Distinguish ETF-specific weakness, sector rotation, sector-wide outflow, and broad-market outflow before interpreting a holding's weakness.",
+    "language":"Use evidence-calibrated wording such as 대형자금 유입 정황/물량 흡수 가능성; do not assert hidden actor intent without evidence.",
+    "newsRole":"News/policy/rates/FX/earnings/flow disclosures are secondary cross-checks after quantitative detection, not the primary discovery signal."
+  },
+  "candidatePolicy": {
+    "level":"L2_ANALYTICAL","newCandidateDomesticUnderlyingOnly":true,"existingOverseasHoldingsCanBeAnalyzed":true,
+    "excludedNewCandidateSymbols":["314250","481180","280320","418670","0050E0","0041D0","488210"],
+    "avoidStaleCandidateBias":true,"compareFreshFullUniverse":true,"shortHistoryRaisesUncertainty":true,
+    "selectionOrder":"Do not start with isolated ETF candidates. First evaluate full-market money flow and sector breadth, then select candidates while checking duplication and early-versus-crowded flow.",
+    "sectorDuplicationCheck":true
   },
   "indicatorPolicy": {
-    "MA5": "fast sensor / exact timing",
-    "MA10": "primary short-term trend axis",
-    "MA20": "pullback support and trend-damage confirmation",
-    "MA60Plus": "medium/long-term structure",
-    "healthyUptrendReference": "price > MA5 > MA10 > MA20",
-    "ma5BreakAloneIsNotSell": true,
-    "seriousWeaknessSequence": "MA5 break -> MA10 break -> failed MA10 reclaim + OBV decline + MACD down",
-    "neverTradeOnlyOnMA5MA10Cross": true
+    "level":"L2_ANALYTICAL","MA5":"fast sensor / exact timing","MA10":"primary short-term trend axis","MA20":"pullback support and trend-damage confirmation","MA60Plus":"medium/long-term structure","healthyUptrendReference":"price > MA5 > MA10 > MA20","ma5BreakAloneIsNotSell":true,"seriousWeaknessSequence":"MA5 break -> MA10 break -> failed MA10 reclaim + OBV decline + MACD down","neverTradeOnlyOnMA5MA10Cross":true,
+    "role":"Individual ETF confirmation/timing layer beneath market/sector context; preserve conflicting timeframe evidence rather than forcing one timeframe to erase another."
   },
   "output": {
-    "holdingsColumns": ["현재 판단", "코드·종목명·계좌", "안정성/위험도", "지금 행동", "다음 조건"],
-    "candidateColumns": ["현재 판단", "코드·종목명", "안정성/위험도", "지금 행동", "다음 조건"],
-    "stabilityRiskNumeric": true,
-    "tickerVerifiedNameRequired": true,
-    "accountRequiredForHoldings": true,
-    "neverCollapseHoldings": true,
-    "noNumericRankColumn": true,
-    "candidateOrder": "GPT attractiveness without displaying a rank score column",
-    "colors": {
-      "defensiveHold": "⚫",
-      "immediateAction": "🔵",
-      "buyWaitOrNear": "🟢",
-      "observe": "🟡",
-      "reduceObserve": "🟠"
-    },
-    "forbiddenZeroAmountPhrases": ["대기(0원)", "유지(0원)"],
-    "actionRequiresExactKRWPercentAndDenominator": true
+    "level":"L3_TACTICAL","holdingsColumns":["현재 판단","코드·종목명·계좌","안정성/위험도","지금 행동","다음 조건"],"candidateColumns":["현재 판단","코드·종목명","안정성/위험도","지금 행동","다음 조건"],"stabilityRiskNumeric":true,"tickerVerifiedNameRequired":true,"accountRequiredForHoldings":true,"neverCollapseHoldings":true,"noNumericRankColumn":true,"candidateOrder":"GPT attractiveness without displaying a rank score column","colors":{"defensiveHold":"⚫","immediateAction":"🔵","buyWaitOrNear":"🟢","observe":"🟡","reduceObserve":"🟠"},"forbiddenZeroAmountPhrases":["대기(0원)","유지(0원)"],"actionRequiresExactKRWPercentAndDenominator":true,
+    "moneyFlowTopSection":"💰 유입되는 곳 | 💸 빠지는 곳 | 🔄 이동 가능성이 보이는 섹터; include 보유종목 자금이탈 경보 when supported."
   },
-  "preOutputChecklist": [
-    "Read gpt-rules.json before ETF analysis.",
-    "Read current latest.json and verify snapshotVersion/status.",
-    "Use marketAsOf as market data date, not generatedAt.",
-    "Check each important holding/candidate dailyAsOf against marketAsOf and flag stale data.",
-    "After data-structure changes, cross-check 379810 before relying on the new fields.",
-    "Use verified ticker + exact name; never guess names.",
-    "List every holding individually; never collapse holdings into 기타 종목.",
-    "Keep holdings and new candidates separate.",
-    "Apply domestic-underlying filter to new candidates.",
-    "Show numeric stability/risk and exact action amounts when an action is proposed."
-  ],
+  "preOutputChecklist": ["Read gpt-rules.json before ETF analysis.","Verify current market index version/status/date and use marketAsOf rather than generatedAt.","Check important holdings/candidates for stale daily/weekly data.","Use verified FULL RAW/history when detailed historical or money-flow evidence is required.","After calculation/schema changes affecting reference fields, cross-check 379810 before relying on changed fields.","Use verified ticker + exact name; never guess names.","List every holding individually; never collapse holdings into 기타 종목.","Keep holdings and new candidates separate.","Apply domestic-underlying filter to new candidates.","Run market/sector money-flow context before isolated candidate selection.","Preserve contrary evidence across timeframe/sector/market scopes.","Show numeric stability/risk and exact action amounts when an action is proposed."],
   "updates": [
-    {"id":"U001","date":"2026-09-16","instruction":"방어보유는 까만색으로 하자","change":"defensiveHold color changed to ⚫","status":"active"},
-    {"id":"U002","date":"2026-09-16","instruction":"앞으로 이렇게 적용해라고 정한 규칙은 업데이트 항목에 추가","change":"Explicit future-application instructions append to update history and become active rules; newer explicit rules override conflicts.","status":"active"},
-    {"id":"U003","date":"2026-09-17","instruction":"Snapshot 생성시간이 아니라 실제 데이터 기준일을 검증","change":"Verify marketAsOf and per-ETF dailyAsOf/weeklyAsOf; stale daily data is not treated as latest.","status":"active"},
-    {"id":"U004","date":"2026-09-17","instruction":"나스닥으로 검증해봐","change":"Use 379810 KODEX 미국나스닥100 as a reference cross-check after program/snapshot structural changes, including latest numeric indicators and dates.","status":"active"}
+    {"id":"U001","date":"2026-09-16","level":"L3_TACTICAL","action":"MODIFY","instruction":"방어보유는 까만색으로 하자","change":"defensiveHold color changed to ⚫","status":"active"},
+    {"id":"U002","date":"2026-09-16","level":"L0_FOUNDATION","action":"MODIFY","instruction":"앞으로 이렇게 적용해라고 정한 규칙은 업데이트 항목에 추가","change":"Explicit future rules are recorded, but v1.1.0 governance now requires conflict/duplicate/level/impact/data/dependency/regression review before activation rather than blindly letting every newer rule overwrite older higher-level rules.","status":"active"},
+    {"id":"U003","date":"2026-09-17","level":"L0_FOUNDATION","action":"KEEP","instruction":"Snapshot 생성시간이 아니라 실제 데이터 기준일을 검증","change":"Verify marketAsOf and per-ETF dailyAsOf/weeklyAsOf; stale daily data is not treated as latest.","status":"active"},
+    {"id":"U004","date":"2026-09-17","level":"L0_FOUNDATION","action":"MODIFY","instruction":"나스닥으로 검증해봐","change":"379810 remains calculation/schema reference verification; transport integrity is separately handled by full-raw manifest/hash verification.","status":"active"},
+    {"id":"U005","date":"2026-09-17","level":"L2_ANALYTICAL","action":"MERGE","purpose":"Detect money inflow before news and candidate selection.","change":"Added full-universe money-flow detection using abnormal volume, OBV, absorption/distribution evidence, sector synchronization and laggard/leader context; news is secondary cross-check.","dependsOn":["foundationRules","dataPolicy"],"affects":["candidatePolicy","indicatorPolicy","output"],"requiredData":"full-universe index plus verified historical price/volume/OBV data","validation":"governance audit incorporated","status":"active"},
+    {"id":"U006","date":"2026-09-17","level":"L2_ANALYTICAL","action":"MERGE","purpose":"Integrate outflow, breadth and holdings risk into the same money-flow framework.","change":"Added inflow/outflow breadth, sector rotation vs broad risk-off, holdings outflow context and Core timing/risk-intensity use; merged with U005 framework to avoid duplicated engines.","dependsOn":["U005"],"affects":["accountArchitecture timing only","candidatePolicy","output"],"requiredData":"sector mapping and reliable breadth/history appropriate to market","validation":"strategic account architecture preserved","status":"active"},
+    {"id":"U007","date":"2026-09-17","level":"L0_FOUNDATION","action":"ADD","purpose":"Prevent new rules from destabilizing the rule system.","change":"Added hierarchical rule governance: L0 Foundation, L1 Strategic, L2 Analytical, L3 Tactical; all changeable with increasing review rigor. Added permission checks, impact/dependency analysis, ADD/KEEP/MODIFY/MERGE/RETIRE lifecycle, invalidation, data sufficiency, implementation classification, invariants, regression, final contradiction audit, RULE/STATE/DATA separation, evidence preservation, and no automatic upward promotion.","affects":["all future rule changes"],"validation":"full v1.0.4-to-v1.1.0 structural audit performed; no intentional L1 strategy change","status":"active"},
+    {"id":"U008","date":"2026-09-17","level":"L0_FOUNDATION","action":"MODIFY","purpose":"Make full raw data the durable detailed source without shrinking it to solve upload limits.","change":"Reframed latest.json as fast index; verified FULL RAW history is detailed source of truth; chunking is transport-only and complete manifest/integrity verification gates promotion to valid latest data.","affects":["dataPolicy","referenceVerification","preOutputChecklist"],"validation":"logical governance audit; operational R15.15 upload verification remains separate","status":"active"}
   ]
 }
