@@ -1,7 +1,7 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.1.1",
-  "updatedAt": "2026-09-23",
+  "version": "1.1.2",
+  "updatedAt": "2026-10-01",
   "sourceFiles": {
     "fullRaw": "FULL_RAW chunk set + manifest",
     "marketIndex": "latest.json",
@@ -257,7 +257,7 @@
     "moneyFlowTopSection": "💰 유입되는 곳 | 💸 빠지는 곳 | 🔄 이동 가능성이 보이는 섹터; include 보유종목 자금이탈 경보 when supported."
   },
   "preOutputChecklist": [
-    "Read gpt-rules.json before ETF analysis.",
+    "Before ETF analysis, confirm gpt-rules.json under projectWorkflow.start; reuse only a previously read, accessible, hash-matched copy and disclose its verification time.",
     "Verify current market index version/status/date and use marketAsOf rather than generatedAt.",
     "Check important holdings/candidates for stale daily/weekly data.",
     "Use verified FULL RAW/history when detailed historical or money-flow evidence is required.",
@@ -268,7 +268,8 @@
     "Apply domestic-underlying filter to new candidates.",
     "Run market/sector money-flow context before isolated candidate selection.",
     "Preserve contrary evidence across timeframe/sector/market scopes.",
-    "Show numeric stability/risk and exact action amounts when an action is proposed."
+    "Show numeric stability/risk and exact action amounts when an action is proposed.",
+    "For every project-related final response, run projectWorkflow.reporting.preSendCheck and include its mandatory status block; unknown progress must be labelled, never invented."
   ],
   "updates": [
     {
@@ -391,31 +392,104 @@
       "requiredData": "Accessible rule source and current task ledger; unavailable sources must be disclosed",
       "validation": "Existing rule sections preserved; new workflow restricted to reporting, no calculation/account-policy changes; duplicate and dependency review complete",
       "status": "active"
+    },
+    {
+      "id": "U010",
+      "date": "2026-10-01",
+      "level": "L3_TACTICAL",
+      "action": "MODIFY",
+      "purpose": "Make recurring project instructions and status reporting explicit while prioritizing the existing basic release.",
+      "reason": "Explicit user request to prepare project instruction replacement and align server rules; document storage must not be mistaken for automatic enforcement.",
+      "dependsOn": [
+        "foundationRules",
+        "ruleGovernance",
+        "U009"
+      ],
+      "affects": [
+        "projectWorkflow",
+        "preOutputChecklist entry/reporting hooks"
+      ],
+      "change": "WORKFLOW_001 revision 2.0.0: compulsory status block; separate current basic progress from historical metrics; short current-state entry; provenance-checked source/evidence reuse; freeze new ideas; preserve safety and independent deployment approvals.",
+      "replacesOrReplacedBy": "Replaces WORKFLOW_001 behavior from v1.1.1; prior source retained by Git blob reference, U001-U009 unchanged.",
+      "requiredData": "Verified source version and accessible task evidence; unavailable current evidence must be explicitly labelled.",
+      "validation": "JSON/structural-preservation and workflow-contract checks in the accompanying change receipt; no claim of model compliance, coding-workspace installation, program regression or live operation.",
+      "status": "active"
     }
   ],
   "projectWorkflow": {
     "id": "WORKFLOW_001",
     "classification": "RULE",
     "level": "L3_TACTICAL",
-    "scope": "Project work reporting and handoff only; no investment-policy or calculation changes",
+    "scope": "Project entry, delivery scope, evidence reuse, progress reporting and handoff only; no investment-policy, numeric-formula or live-deployment authorization changes",
     "status": "active",
+    "revision": "2.0.0",
+    "instructionRevision": "PROJECT_ENTRY_V2_20261001",
+    "priority": "Current explicit user instructions and higher-priority platform instructions prevail. This reference document grants no independent tool, account, trading or deployment permission. Workflow changes cannot silently rewrite L0-L2 policies.",
     "start": [
-      "Read gpt-rules.json and the current project task ledger before continuing project work.",
-      "Record source URL, rule version/blob SHA and read time; failed reads remain UNVERIFIED.",
-      "Select current task ID and check prerequisites; unavailable governance does not block independent read-only diagnostics."
+      "At a new project session, task or phase, or an explicit synchronization/rule-change request, verify the current gpt-rules.json version and Git blob SHA, and record source and verification time. Initially read the full source.",
+      "Reuse a previously read source/summary only when it is still accessible, its provenance and matching source hash are known, and the current task needs no omitted detail. A remembered hash alone is not a loaded rule. If the hash changes, review the changed sections and dependencies before affected work.",
+      "For consecutive replies within the same task, a verified accessible copy may be reused with its original verification time and an explicit not-rechecked label. Before remote writes or changed investment analysis, revalidate the relevant current source.",
+      "If the rules cannot be checked, state 서버 규칙 미확인. Disclose any last-verified copy as historical; do not claim current synchronization. Independent read-only explanation/diagnostics may continue, but unverified authorization or policy changes must not be acted on.",
+      "Read the canonical CURRENT_STATE.md if it exists and its baseline is identifiable; otherwise read the latest accessible PROJECT_STATUS.md summary. Use the designated integration workspace and relevant source conversations only as accessible. Check baseline/commit, unsaved changes, current task and prerequisites before modifying code.",
+      "Search available sources before requesting missing handoff material. If current local files or another conversation cannot be accessed, state that boundary and request only indispensable missing evidence once; do not request an already supplied receipt repeatedly.",
+      "Announce the current work item and next concrete action briefly. Preserve current changes and never treat an old archive as the latest code. An explicitly authorized reconstruction remains labelled reconstructed rather than recovered."
     ],
+    "completionFocus": {
+      "primary": "Finish the approved basic usable software release (BASIC_RELEASE) before implementing new ideas.",
+      "scopeControl": "Map existing approved requirements to a fixed scope, acceptance criteria and evidence once. Preserve approved but unfinished features. Do not silently remove requirements, relabel required data as optional, or shrink the denominator to manufacture 100%.",
+      "deferred": "Record new indicators, macro/crash research and other new ideas in the existing backlog; do not implement them without an explicit scope change. Existing optional research is not automatically a release prerequisite.",
+      "safetyException": "Data corruption, future-data leakage, authorization/security defects and broken required calculations must be fixed or the affected feature safely blocked before release; scope efficiency never bypasses safety.",
+      "completionMeaning": "Basic software completion, real-data coverage, live deployment/observed operation and investment-performance approval are separate tracks. A file-based basic release may precede hosting only when its agreed scope says so; neither represents a production deployment or profitable strategy."
+    },
+    "efficiency": {
+      "readStrategy": "Use the short current-state summary and existing feature/code/test map first. Inspect full history only for missing evidence, conflicts or dependencies; do not restart whole-project discovery for each request.",
+      "execution": "Work on the named task and affected dependencies, use existing code/tests, and end at the agreed completion condition. Do not add new work to make a longer batch.",
+      "testReuse": "Reuse evidence only for unchanged relevant code, data, dependencies, environment and scope. Run targeted/contract tests after relevant changes and full regression at integration/release gates or when shared safety/data/auth/storage changes require it.",
+      "blocked": "Record reason and resume condition for missing keys, permissions, inputs or current code. Do not repeat the same blocked call unless conditions change; continue only independent authorized work.",
+      "artifacts": "Preserve complete source/log/history. Keep CURRENT_STATE short and derive it from the existing ledger instead of creating competing truth stores. Avoid repeated full ZIP creation and long success-log narration between milestones.",
+      "workerBoundary": "Rule reporting does not require a Worker management site. Early read-only/local/authorized isolated interface checks are allowed when needed to unblock the basic release. Keep production code/storage changes and final integration separately scoped and authorized."
+    },
+    "reporting": {
+      "appliesTo": "Every project-related final response, including short continue/status/analysis replies; unrelated casual conversation is outside this scope.",
+      "mandatoryStatusBlock": [
+        "기본 완성: 완료 n/N (x%) · 잔여 m/N (y%), 또는 미산정 + 구체적 이유",
+        "현재 작업·이번 결과: 작업 ID와 실제 수행 결과",
+        "다음: 다음 행동과 필요한 차단/재개 조건",
+        "반영: 로컬/프로젝트 파일/GitHub/프로젝트 지침/Worker·배포 상태 구분",
+        "규칙·대장: 규칙 버전·SHA/확인시각과 대장 기준시각; 재조회하지 않았으면 표시"
+      ],
+      "progressBasis": "Use the approved BASIC_RELEASE criteria and evidence, with explicit denominator/weights. Do not put the same task into multiple numerator credits. Source-dependent unresolved required gates remain incomplete.",
+      "unknown": "Keep the progress line even when unmeasurable: explain the missing scope/evidence and list relevant complete/incomplete items. Never invent 0%, 50% or 100%, and never use test counts as project progress.",
+      "historical": "The old 16/32 = 50% is historical, not the current basic release percentage. Preserve old criteria and evidence in history; show a newly scoped basic release as a separately named measure, not a rewrite of the old audit.",
+      "separateTracks": "Keep basic release, real-data validation, deployment/operation and research/investment approval distinct. Optional research or long-running performance tests do not automatically freeze the basic software metric; required safety gates still do.",
+      "preSendCheck": [
+        "Status block present",
+        "Progress tied to real scope/evidence or explicitly unknown",
+        "Current and historical evidence distinguished",
+        "Actual writes/deployment distinguished from proposed files",
+        "Source version and access limits stated"
+      ],
+      "omissionRecovery": "If a required status line was missed, correct that omission in the next response using available evidence. Do not restart research or change the percentage just to repair formatting."
+    },
     "finish": [
-      "Update task status, evidence, source conversation, unresolved work and next action before switching tasks.",
-      "Report overall progress and remaining percentage only with an explicit scope and reproducible milestone/weight basis; otherwise say not yet measurable and explain.",
-      "Always report current work, completed result, next step, server deployment status and rule synchronization status.",
-      "Distinguish design, implementation, offline tests, real-data verification, deployment and observed operation."
+      "At task transition/end, record completed work, evidence, source, unresolved/deferred items, corrections and next action in the existing task ledger or a handoff record. This workflow file is not the task ledger.",
+      "Use version-protected writes when available and read back remote changes before calling them saved/verified. A generated local file is not remote synchronization. If writing is unavailable, provide a labelled handoff instead.",
+      "Distinguish design, code, offline tests, real-data tests, deployment and observed operation. A manual run is not a Cron run; a publication receipt is not a data-quality or investment-performance approval.",
+      "Include reporting.mandatoryStatusBlock after reporting.preSendCheck."
     ],
     "handoff": [
-      "Preserve incomplete and completed task history; do not silently drop deferred work.",
-      "Compare related project conversations at least daily when scheduled tooling is available; record inaccessible sources as unchecked."
+      "Preserve original completed, failed and deferred records. Supersede or retire outdated instructions with replacement/reason rather than erasing history; the current-state summary need not reproduce all past ledgers.",
+      "Cross-conversation reconciliation is supplementary and occurs only with available authorized access. Daily/background reconciliation requires an actually configured and observed automation; none is created by storing this rule.",
+      "Deploy the concise instruction copy through the actual project settings and, where applicable, the coding workspace guidance. Record each surface as pending or checked separately. Server save, settings paste, rule read and behavioral compliance are different facts."
     ],
-    "enforcementLimit": "A stored file does not automatically inject itself into every chat. Project-level entry instructions or a caller must load this file; report unconnected entry points instead of claiming universal enforcement.",
+    "enforcementLimit": "Project instructions and AGENTS.md can guide behavior but do not guarantee perfect compliance or synchronize every session. Confirm loaded instructions and the status block with a small read-only new-session check; do not claim a software-enforced guard exists unless implemented and tested.",
     "privacy": "Do not publish private holdings, account information, tokens or conversation contents in the public rules repository.",
-    "priority": "User instructions and higher-level investment/foundation rules remain unchanged."
+    "previousRevision": {
+      "revision": "1.0.0",
+      "status": "superseded",
+      "sourceVersion": "1.1.1",
+      "sourceBlobSha": "1b64ee9516c97db20147ec2c910c52d59e13d2fd",
+      "reason": "Retain the original workflow in Git history while making scope, compulsory reporting and evidence reuse explicit. Investment/data preservation policies remain intact."
+    }
   }
 }
