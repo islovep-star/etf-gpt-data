@@ -1,0 +1,76 @@
+{
+  "taskId": "WORKFLOW-CONTINUOUS-EXECUTION-20261018",
+  "checkedAt": "2026-10-18T01:08:11.114114+00:00",
+  "classification": "RULE",
+  "level": "L3_TACTICAL",
+  "implementation": "GPT_ONLY",
+  "oldVersion": "1.1.2",
+  "oldRuleGitBlob": "327f91d760e5d703ba6c970e3b9fa8a036de9187",
+  "newVersion": "1.1.3",
+  "newRuleGitBlob": "7774021c8b992fed7e20b4cf1d9a87d829eaada8",
+  "newRuleSha256": "e496e8fef0e5feaa59163673f50625b1c710013fb59a149d2b96aa0b2eb19ef7",
+  "workflowRevision": "2.1.0",
+  "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
+  "instructionPath": "project-instructions/PROJECT_ENTRY_V2_2_20261018_COPY.txt",
+  "instructionSha256": "eee288032cb1a0e6f91f7a279423a2237c64448008ff0f247b653aa2b93035a3",
+  "instructionCharacters": 5249,
+  "changedPaths": [
+    ".projectWorkflow.efficiency.artifacts",
+    ".projectWorkflow.efficiency.batching",
+    ".projectWorkflow.efficiency.blocked",
+    ".projectWorkflow.efficiency.execution",
+    ".projectWorkflow.efficiency.permissionBoundary",
+    ".projectWorkflow.efficiency.progressUpdates",
+    ".projectWorkflow.instructionCopy",
+    ".projectWorkflow.instructionRevision",
+    ".projectWorkflow.previousRevision.instructionRevision",
+    ".projectWorkflow.previousRevision.reason",
+    ".projectWorkflow.previousRevision.revision",
+    ".projectWorkflow.previousRevision.sourceBlobSha",
+    ".projectWorkflow.previousRevision.sourceVersion",
+    ".projectWorkflow.previousRevisions",
+    ".projectWorkflow.revision",
+    ".updatedAt",
+    ".updates",
+    ".version"
+  ],
+  "preservation": {
+    "nonWorkflowPoliciesUnchanged": true,
+    "oldUpdatesExactPreserved": true,
+    "unchangedWorkflowSectionsExactPreserved": true,
+    "testReuseReadStrategyWorkerBoundaryPreserved": true,
+    "priorRevisionHistoryPreserved": true,
+    "allDependencyIdsResolved": true
+  },
+  "review": {
+    "unresolvedConflicts": 0,
+    "unnecessaryDuplicates": 0,
+    "unplacedRules": 0,
+    "brokenDependencies": 0,
+    "activeRulesWithMissingRequiredData": 0,
+    "replacedRulesStillActive": 0,
+    "method": "Author structural and instruction-to-rule contract review; no independent-review claim"
+  },
+  "authority": {
+    "source": "Explicit current user request",
+    "scope": "Create copyable instructions and apply server workflow rule",
+    "newRuntimeDeployments": 0,
+    "newCollectionCalls": 0,
+    "newDelegationAuthority": false,
+    "projectSettingsUpdated": false
+  },
+  "runtimeImpact": {
+    "knownProgramRulePin": "1.1.2/327f91d760e5d703ba6c970e3b9fa8a036de9187",
+    "locations": [
+      "src/basic_release_input.mjs",
+      "deployment/basic_app/worker.mjs"
+    ],
+    "existingProgramsKeepFrozenPins": true,
+    "automaticRuleFileReplacement": false,
+    "programUpgradeClaim": false,
+    "migrationRequiredBeforeClaimingNewRuntimeRuleVersion": true,
+    "investmentAndCalculationSemanticsChanged": false
+  },
+  "draftV21Activated": false,
+  "behaviorGuaranteed": false
+}

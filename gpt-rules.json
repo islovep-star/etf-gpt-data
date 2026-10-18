@@ -1,7 +1,7 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.1.2",
-  "updatedAt": "2026-10-01",
+  "version": "1.1.3",
+  "updatedAt": "2026-10-18",
   "sourceFiles": {
     "fullRaw": "FULL_RAW chunk set + manifest",
     "marketIndex": "latest.json",
@@ -414,6 +414,35 @@
       "requiredData": "Verified source version and accessible task evidence; unavailable current evidence must be explicitly labelled.",
       "validation": "JSON/structural-preservation and workflow-contract checks in the accompanying change receipt; no claim of model compliance, coding-workspace installation, program regression or live operation.",
       "status": "active"
+    },
+    {
+      "id": "U011",
+      "date": "2026-10-18",
+      "classification": "RULE",
+      "level": "L3_TACTICAL",
+      "strength": "GATE",
+      "action": "MODIFY",
+      "purpose": "Complete authorized work without repeated continuation prompts while retaining actual safety and authorization boundaries.",
+      "reason": "Explicit user request to supply a copyable project instruction file and apply the agreed execution policy to server rules.",
+      "dependsOn": [
+        "foundationRules",
+        "ruleGovernance",
+        "U009",
+        "U010"
+      ],
+      "affects": [
+        "projectWorkflow.efficiency",
+        "projectWorkflow.revision",
+        "projectWorkflow.instructionRevision",
+        "projectWorkflow.instructionCopy",
+        "projectWorkflow.previousRevision"
+      ],
+      "change": "WORKFLOW_001 revision 2.1.0: continuous end-to-end execution, useful batches, progress without waiting, genuine scoped blockers, checkpoint-based resumption and no artificial progress. New copy PROJECT_ENTRY_V2_2_20261018 is based on active V2 plus this approved execution change; the separate V2.1 draft is not activated wholesale.",
+      "implementation": "GPT_ONLY",
+      "replacesOrReplacedBy": "Supersedes WORKFLOW_001 revision 2.0.0 behavior in v1.1.2; U001-U010 and all non-workflow analytical policies preserved.",
+      "requiredData": "Current accessible rules and canonical ledger, authorized task scope, and task-specific evidence; missing evidence remains a blocker for dependent work.",
+      "validation": "Structural preservation and changed-path audit, unique history/dependency checks, instruction-to-rule contract review, authority and runtime-pin impact review; no new operational or investment approval.",
+      "status": "active"
     }
   ],
   "projectWorkflow": {
@@ -422,8 +451,8 @@
     "level": "L3_TACTICAL",
     "scope": "Project entry, delivery scope, evidence reuse, progress reporting and handoff only; no investment-policy, numeric-formula or live-deployment authorization changes",
     "status": "active",
-    "revision": "2.0.0",
-    "instructionRevision": "PROJECT_ENTRY_V2_20261001",
+    "revision": "2.1.0",
+    "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
     "priority": "Current explicit user instructions and higher-priority platform instructions prevail. This reference document grants no independent tool, account, trading or deployment permission. Workflow changes cannot silently rewrite L0-L2 policies.",
     "start": [
       "At a new project session, task or phase, or an explicit synchronization/rule-change request, verify the current gpt-rules.json version and Git blob SHA, and record source and verification time. Initially read the full source.",
@@ -443,11 +472,14 @@
     },
     "efficiency": {
       "readStrategy": "Use the short current-state summary and existing feature/code/test map first. Inspect full history only for missing evidence, conflicts or dependencies; do not restart whole-project discovery for each request.",
-      "execution": "Work on the named task and affected dependencies, use existing code/tests, and end at the agreed completion condition. Do not add new work to make a longer batch.",
+      "execution": "Once a task direction and scope are authorized, continue through the necessary investigation, implementation or fix, appropriate verification, authorized integration, saving and result readback until the agreed completion condition or a genuine blocker. Do not require repeated 다음/계속/진행 for routine steps already within that scope. Use reasonable reversible implementation choices, preserve existing changes and approved unfinished requirements, and do not end at a plan, preparation, checkpoint or report when the actual requested implementation remains actionable. Review-only or explanation-only requests retain their own requested finish line and do not authorize implementation or deployment.",
       "testReuse": "Reuse evidence only for unchanged relevant code, data, dependencies, environment and scope. Run targeted/contract tests after relevant changes and full regression at integration/release gates or when shared safety/data/auth/storage changes require it.",
-      "blocked": "Record reason and resume condition for missing keys, permissions, inputs or current code. Do not repeat the same blocked call unless conditions change; continue only independent authorized work.",
-      "artifacts": "Preserve complete source/log/history. Keep CURRENT_STATE short and derive it from the existing ledger instead of creating competing truth stores. Avoid repeated full ZIP creation and long success-log narration between milestones.",
-      "workerBoundary": "Rule reporting does not require a Worker management site. Early read-only/local/authorized isolated interface checks are allowed when needed to unblock the basic release. Keep production code/storage changes and final integration separately scoped and authorized."
+      "blocked": "Stop an affected dependent action only at its agreed completion condition, an explicit user stop, a missing indispensable input or tool/environment prerequisite, an actual permission/upper-instruction restriction, or a material scope/cost/irreversible decision requiring the user. Continue other independent authorized unfinished work in priority order when feasible; do not auto-expand into unapproved research. If no actionable authorized work remains, report the concrete blocker, evidence already checked, and exact resume condition together. Do not repeat the same failed call, login, search, input request or verification preparation without evidence of a relevant change. Keep a blocker scoped to the affected work.",
+      "artifacts": "Preserve complete source/log/history and use the existing ledger plus a short CURRENT_STATE rather than competing truth stores. For long work, checkpoint the current baseline/commit, relevant data and rule hashes, completed work, remaining work, blockers, next concrete action and authorization scope/consumption. Resume from that checkpoint after context compaction or interruption; do not restart whole-project discovery, reimplementation or unchanged tests, or require another 다음 merely to reconstruct context. Avoid repeated full ZIP creation and long success-log narration between milestones.",
+      "workerBoundary": "Rule reporting does not require a Worker management site. Early read-only/local/authorized isolated interface checks are allowed when needed to unblock the basic release. Keep production code/storage changes and final integration separately scoped and authorized.",
+      "batching": "Bundle related authorized work as far as useful, including five or more items when enough related work exists. Item count is not a completion target: finish necessary work even when there are fewer items, and never add research, tests or documents just to fill a batch. Documents or reviews are valid deliverables when requested, but are not implementation-completion credits.",
+      "progressUpdates": "Give concise progress updates during active work and then continue without waiting for a reply; an update is not a stopping point. Incorporate user steering and answer status questions without abandoning the active goal unless the user pauses, cancels or changes it. Apply the mandatory status block to final responses, not to every interim update.",
+      "permissionBoundary": "Continuous execution grants no additional tool, account, external-collection, publication, integration, deployment, scheduled-execution, trading or agent-delegation authority. Follow actual user scope and higher-priority execution instructions, reuse unconsumed authorization only within its original conditions, and never reuse exhausted one-shot approvals. Distinguish server workflow instructions from hash-pinned program rule snapshots; this GPT_ONLY workflow update does not relabel or replace historical runtime pins. Runtime migration requires its affected checks and actual authorization separately."
     },
     "reporting": {
       "appliesTo": "Every project-related final response, including short continue/status/analysis replies; unrelated casual conversation is outside this scope.",
@@ -485,11 +517,26 @@
     "enforcementLimit": "Project instructions and AGENTS.md can guide behavior but do not guarantee perfect compliance or synchronize every session. Confirm loaded instructions and the status block with a small read-only new-session check; do not claim a software-enforced guard exists unless implemented and tested.",
     "privacy": "Do not publish private holdings, account information, tokens or conversation contents in the public rules repository.",
     "previousRevision": {
-      "revision": "1.0.0",
+      "revision": "2.0.0",
       "status": "superseded",
-      "sourceVersion": "1.1.1",
-      "sourceBlobSha": "1b64ee9516c97db20147ec2c910c52d59e13d2fd",
-      "reason": "Retain the original workflow in Git history while making scope, compulsory reporting and evidence reuse explicit. Investment/data preservation policies remain intact."
+      "sourceVersion": "1.1.2",
+      "sourceBlobSha": "327f91d760e5d703ba6c970e3b9fa8a036de9187",
+      "instructionRevision": "PROJECT_ENTRY_V2_20261001",
+      "reason": "User-authorized clarification of continuous execution, useful batching, genuine stop conditions, checkpoint continuity and existing authority boundaries; analytical and investment rules unchanged."
+    },
+    "previousRevisions": [
+      {
+        "revision": "1.0.0",
+        "status": "superseded",
+        "sourceVersion": "1.1.1",
+        "sourceBlobSha": "1b64ee9516c97db20147ec2c910c52d59e13d2fd",
+        "reason": "Retain the original workflow in Git history while making scope, compulsory reporting and evidence reuse explicit. Investment/data preservation policies remain intact."
+      }
+    ],
+    "instructionCopy": {
+      "path": "project-instructions/PROJECT_ENTRY_V2_2_20261018_COPY.txt",
+      "sha256": "eee288032cb1a0e6f91f7a279423a2237c64448008ff0f247b653aa2b93035a3",
+      "purpose": "Complete Korean copy for manual project-settings replacement; repository save does not change project settings or guarantee behavior."
     }
   }
 }
