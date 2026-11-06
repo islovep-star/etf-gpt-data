@@ -1,6 +1,6 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "updatedAt": "2026-11-06",
   "sourceFiles": {
     "fullRaw": "FULL_RAW chunk set + manifest",
@@ -470,6 +470,35 @@
       "requiredData": "Current accessible canonical ledger, current state, task-specific evidence and approval record; inaccessible or ambiguous sources remain unknown.",
       "validation": "Structural preservation, changed-path audit, unique history IDs and existing dependencies, no authorization escalation; actual project settings and software enforcement verified separately.",
       "status": "active"
+    },
+    {
+      "id": "U013",
+      "date": "2026-11-06",
+      "classification": "RULE",
+      "level": "L3_TACTICAL",
+      "strength": "GATE",
+      "action": "MODIFY",
+      "purpose": "Reduce repeated checks and unnecessary questions by clarifying existing workflow boundaries.",
+      "reason": "User requested revised project instructions and server rules following workflow review.",
+      "dependsOn": [
+        "foundationRules",
+        "ruleGovernance",
+        "U011",
+        "U012"
+      ],
+      "affects": [
+        "projectWorkflow.start",
+        "projectWorkflow.efficiency.batching",
+        "projectWorkflow.efficiency.permissionBoundary",
+        "projectWorkflow.handoff",
+        "projectWorkflow.instructionCopy"
+      ],
+      "change": "WORKFLOW_001 2.1.2 defines work-package entry, targeted evidence lookup, no arbitrary approval expiry, no minimum batch count and an aligned Korean copy incorporating completion reconciliation.",
+      "implementation": "GPT_ONLY",
+      "replacesOrReplacedBy": "Supersedes the affected wording of 2.1.1; preserves its completionReconciliation and all prior history.",
+      "requiredData": "Accessible current source, relevant item evidence and original approval scope; unknowns remain labelled.",
+      "validation": "JSON parse; unchanged non-workflow policy and prior history; unique update IDs and dependency audit; instruction/rule version and digest agreement; scoped contradiction and authority review. No software-runtime or project-settings verification implied.",
+      "status": "active"
     }
   ],
   "projectWorkflow": {
@@ -478,16 +507,16 @@
     "level": "L3_TACTICAL",
     "scope": "Project entry, delivery scope, evidence reuse, progress reporting and handoff only; no investment-policy, numeric-formula or live-deployment authorization changes",
     "status": "active",
-    "revision": "2.1.1",
-    "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
+    "revision": "2.1.2",
+    "instructionRevision": "PROJECT_ENTRY_V2_3_20261106",
     "priority": "Current explicit user instructions and higher-priority platform instructions prevail. This reference document grants no independent tool, account, trading or deployment permission. Workflow changes cannot silently rewrite L0-L2 policies.",
     "start": [
-      "At a new project session, task or phase, or an explicit synchronization/rule-change request, verify the current gpt-rules.json version and Git blob SHA, and record source and verification time. Initially read the full source.",
+      "A phase is one agreed work package, not a conversation turn or substep. Verify the current gpt-rules.json version, Git blob SHA, source and time at the first check of a new session, a sign of rule changes, or an explicit synchronization/rule-change request; initially read the full source. Substeps and continue messages within the same package are not new verification triggers; reuse the checked time/hash subject to the following provenance and pre-write rules.",
       "Reuse a previously read source/summary only when it is still accessible, its provenance and matching source hash are known, and the current task needs no omitted detail. A remembered hash alone is not a loaded rule. If the hash changes, review the changed sections and dependencies before affected work.",
       "For consecutive replies within the same task, a verified accessible copy may be reused with its original verification time and an explicit not-rechecked label. Before remote writes or changed investment analysis, revalidate the relevant current source.",
       "If the rules cannot be checked, state 서버 규칙 미확인. Disclose any last-verified copy as historical; do not claim current synchronization. Independent read-only explanation/diagnostics may continue, but unverified authorization or policy changes must not be acted on.",
-      "Read the canonical CURRENT_STATE.md if it exists and its baseline is identifiable; otherwise read the latest accessible PROJECT_STATUS.md summary. Use the designated integration workspace and relevant source conversations only as accessible. Check baseline/commit, unsaved changes, current task and prerequisites before modifying code.",
-      "Search available sources before requesting missing handoff material. If current local files or another conversation cannot be accessed, state that boundary and request only indispensable missing evidence once; do not request an already supplied receipt repeatedly.",
+      "Read identifiable canonical CURRENT_STATE.md first, otherwise the latest accessible PROJECT_STATUS.md summary. Use the existing ledger's item ID, baseline commit and relevant paths to inspect only the code, unsaved changes, prerequisites and actual version affected by this modification and its dependencies. File existence does not establish freshness. Reconcile conflicts under completionReconciliation rather than reconstructing all history.",
+      "Before requesting material, inspect linked current-state files, prior attachments and known sources, then find only missing public originals on official websites. Distinguish absent, location unknown, inaccessible, outdated and unverified. State access limits and request only indispensable evidence once, with exact name, period, purpose and locations checked. Do not repeat searches without changed source/access conditions. Group necessary questions and continue independent authorized work while waiting.",
       "Announce the current work item and next concrete action briefly. Preserve current changes and never treat an old archive as the latest code. An explicitly authorized reconstruction remains labelled reconstructed rather than recovered."
     ],
     "completionFocus": {
@@ -504,9 +533,9 @@
       "blocked": "Stop an affected dependent action only at its agreed completion condition, an explicit user stop, a missing indispensable input or tool/environment prerequisite, an actual permission/upper-instruction restriction, or a material scope/cost/irreversible decision requiring the user. Continue other independent authorized unfinished work in priority order when feasible; do not auto-expand into unapproved research. If no actionable authorized work remains, report the concrete blocker, evidence already checked, and exact resume condition together. Do not repeat the same failed call, login, search, input request or verification preparation without evidence of a relevant change. Keep a blocker scoped to the affected work.",
       "artifacts": "Preserve complete source/log/history and use the existing ledger plus a short CURRENT_STATE rather than competing truth stores. For long work, checkpoint the current baseline/commit, relevant data and rule hashes, completed work, remaining work, blockers, next concrete action and authorization scope/consumption. Resume from that checkpoint after context compaction or interruption; do not restart whole-project discovery, reimplementation or unchanged tests, or require another 다음 merely to reconstruct context. Avoid repeated full ZIP creation and long success-log narration between milestones.",
       "workerBoundary": "Rule reporting does not require a Worker management site. Early read-only/local/authorized isolated interface checks are allowed when needed to unblock the basic release. Keep production code/storage changes and final integration separately scoped and authorized.",
-      "batching": "Bundle related authorized work as far as useful, including five or more items when enough related work exists. Item count is not a completion target: finish necessary work even when there are fewer items, and never add research, tests or documents just to fill a batch. Documents or reviews are valid deliverables when requested, but are not implementation-completion credits.",
+      "batching": "Bundle related authorized work by acceptance condition; there is no minimum item count. Item count is not a completion target: finish necessary work even when there are fewer items, and never add research, tests or documents just to fill a batch. Documents or reviews are valid deliverables when requested, but are not implementation-completion credits.",
       "progressUpdates": "Give concise progress updates during active work and then continue without waiting for a reply; an update is not a stopping point. Incorporate user steering and answer status questions without abandoning the active goal unless the user pauses, cancels or changes it. Apply the mandatory status block to final responses, not to every interim update.",
-      "permissionBoundary": "Continuous execution grants no additional tool, account, external-collection, publication, integration, deployment, scheduled-execution, trading or agent-delegation authority. Follow actual user scope and higher-priority execution instructions, reuse unconsumed authorization only within its original conditions, and never reuse exhausted one-shot approvals. Distinguish server workflow instructions from hash-pinned program rule snapshots; this GPT_ONLY workflow update does not relabel or replace historical runtime pins. Runtime migration requires its affected checks and actual authorization separately."
+      "permissionBoundary": "Continuous execution grants no additional tool, account, external-collection, publication, integration, deployment, scheduled-execution, trading or agent-delegation authority. Follow actual user scope and higher-priority execution instructions, reuse unconsumed authorization only within its original conditions, and never reuse exhausted one-shot approvals. Distinguish server workflow instructions from hash-pinned program rule snapshots; this GPT_ONLY workflow update does not relabel or replace historical runtime pins. Runtime migration requires its affected checks and actual authorization separately. Consult existing approval records for target, action, scope, validity conditions and any explicit count limit. Do not invent a one-shot or exhausted status when no count or expiry condition was imposed. Evaluate same-scope continuation and retries under the original grant and higher-priority policy; required per-action confirmation remains mandatory. A renewed approval request must identify the exact material difference or policy requirement not covered by the prior grant."
     },
     "reporting": {
       "appliesTo": "Every project-related final response, including short continue/status/analysis replies; unrelated casual conversation is outside this scope.",
@@ -539,7 +568,7 @@
     "handoff": [
       "Preserve original completed, failed and deferred records. Supersede or retire outdated instructions with replacement/reason rather than erasing history; the current-state summary need not reproduce all past ledgers.",
       "Cross-conversation reconciliation is supplementary and occurs only with available authorized access. Daily/background reconciliation requires an actually configured and observed automation; none is created by storing this rule.",
-      "Deploy the concise instruction copy through the actual project settings and, where applicable, the coding workspace guidance. Record each surface as pending or checked separately. Server save, settings paste, rule read and behavioral compliance are different facts."
+      "Apply the concise instruction copy to actual project settings or coding workspace guidance only when explicitly requested. During ordinary work, check the applicable copy and relevant differences, not every configuration surface. Record each surface separately: server save, settings update, rule load and behavioral compliance are different facts."
     ],
     "enforcementLimit": "Project instructions and AGENTS.md can guide behavior but do not guarantee perfect compliance or synchronize every session. Confirm loaded instructions and the status block with a small read-only new-session check; do not claim a software-enforced guard exists unless implemented and tested.",
     "privacy": "Do not publish private holdings, account information, tokens or conversation contents in the public rules repository.",
@@ -561,10 +590,10 @@
       }
     ],
     "instructionCopy": {
-      "path": "project-instructions/PROJECT_ENTRY_V2_2_20261018_COPY.txt",
-      "sha256": "eee288032cb1a0e6f91f7a279423a2237c64448008ff0f247b653aa2b93035a3",
-      "purpose": "Complete Korean copy for manual project-settings replacement; repository save does not change project settings or guarantee behavior.",
-      "scopeNote": "The referenced PROJECT_ENTRY_V2_2 copy remains the unchanged prior baseline. Revision 2.1.1 adds completionReconciliation to the server rule; project settings and any new instruction copy require separate verification."
+      "path": "project-instructions/PROJECT_ENTRY_V2_3_20261106_COPY.txt",
+      "sha256": "c09103971b27eef7bd51b8d5b7dda0ed145928f83ac98ae6f8d47af586f27f46",
+      "purpose": "Complete Korean project workflow text referencing server detailed policy; manual settings replacement only when explicitly requested.",
+      "scopeNote": "Aligned with server 1.1.5 / WORKFLOW_001 2.1.2, including 2.1.1 completion reconciliation. Prior V2_2 copy remains historical in Git and is not the current copy. Server save does not update project settings, workspace instructions, runtime snapshots or guarantee compliance."
     },
     "completionReconciliation": {
       "classification": "RULE",
@@ -586,6 +615,14 @@
         "sourceBlobSha": "7774021c8b992fed7e20b4cf1d9a87d829eaada8",
         "status": "superseded-by-2.1.1",
         "reason": "User-requested completion reconciliation and evidence reuse clarification; existing policies and approval boundaries retained."
+      },
+      {
+        "revision": "2.1.1",
+        "sourceVersion": "1.1.4",
+        "sourceBlobSha": "2dbd9ada46d76e09fc647209088106fca9df182e",
+        "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
+        "status": "superseded-by-2.1.2",
+        "reason": "Clarify work-package verification, scoped entry checks, evidence lookup and approval lifetime; remove numeric batch minimum; align Korean copy. Completion reconciliation and safety/authority policies retained."
       }
     ]
   }
