@@ -1,7 +1,7 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.1.3",
-  "updatedAt": "2026-10-18",
+  "version": "1.1.4",
+  "updatedAt": "2026-11-06",
   "sourceFiles": {
     "fullRaw": "FULL_RAW chunk set + manifest",
     "marketIndex": "latest.json",
@@ -443,6 +443,33 @@
       "requiredData": "Current accessible rules and canonical ledger, authorized task scope, and task-specific evidence; missing evidence remains a blocker for dependent work.",
       "validation": "Structural preservation and changed-path audit, unique history/dependency checks, instruction-to-rule contract review, authority and runtime-pin impact review; no new operational or investment approval.",
       "status": "active"
+    },
+    {
+      "id": "U012",
+      "date": "2026-11-06",
+      "classification": "RULE",
+      "level": "L3_TACTICAL",
+      "strength": "GATE",
+      "action": "MERGE",
+      "purpose": "Prevent repetition by reconciling completed, partial, blocked and unfinished work before execution.",
+      "reason": "User requested that completed and unfinished work be separated and recorded in project rules after completed work was repeatedly revisited.",
+      "dependsOn": [
+        "foundationRules",
+        "ruleGovernance",
+        "U010",
+        "U011"
+      ],
+      "affects": [
+        "projectWorkflow.completionReconciliation",
+        "projectWorkflow.revision",
+        "projectWorkflow.instructionCopy"
+      ],
+      "change": "WORKFLOW_001 2.1.1 adds a task-specific reconciliation gate, evidence freshness and conflict handling, explicit partial completion and nonrepetition with narrow invalidation.",
+      "implementation": "GPT_ONLY",
+      "replacesOrReplacedBy": "Clarifies and extends U011 without changing L0-L2 rules or historical runtime snapshots.",
+      "requiredData": "Current accessible canonical ledger, current state, task-specific evidence and approval record; inaccessible or ambiguous sources remain unknown.",
+      "validation": "Structural preservation, changed-path audit, unique history IDs and existing dependencies, no authorization escalation; actual project settings and software enforcement verified separately.",
+      "status": "active"
     }
   ],
   "projectWorkflow": {
@@ -451,7 +478,7 @@
     "level": "L3_TACTICAL",
     "scope": "Project entry, delivery scope, evidence reuse, progress reporting and handoff only; no investment-policy, numeric-formula or live-deployment authorization changes",
     "status": "active",
-    "revision": "2.1.0",
+    "revision": "2.1.1",
     "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
     "priority": "Current explicit user instructions and higher-priority platform instructions prevail. This reference document grants no independent tool, account, trading or deployment permission. Workflow changes cannot silently rewrite L0-L2 policies.",
     "start": [
@@ -536,7 +563,30 @@
     "instructionCopy": {
       "path": "project-instructions/PROJECT_ENTRY_V2_2_20261018_COPY.txt",
       "sha256": "eee288032cb1a0e6f91f7a279423a2237c64448008ff0f247b653aa2b93035a3",
-      "purpose": "Complete Korean copy for manual project-settings replacement; repository save does not change project settings or guarantee behavior."
-    }
+      "purpose": "Complete Korean copy for manual project-settings replacement; repository save does not change project settings or guarantee behavior.",
+      "scopeNote": "The referenced PROJECT_ENTRY_V2_2 copy remains the unchanged prior baseline. Revision 2.1.1 adds completionReconciliation to the server rule; project settings and any new instruction copy require separate verification."
+    },
+    "completionReconciliation": {
+      "classification": "RULE",
+      "level": "L3_TACTICAL",
+      "strength": "GATE",
+      "purpose": "Distinguish completed and unfinished work before action and prevent stale summaries or repeated work from hiding completed evidence.",
+      "canonicalSources": "Use the existing canonical ledger and current state/handoff, not a competing task ledger. Identify the current item, version, scope, actual user confirmations, evidence and authorization consumption. Inspect the latest item-specific entry when a summary is older, ambiguous or conflicts with later evidence; do not reconstruct the entire history.",
+      "statusModel": "For each relevant item distinguish completed with scope and evidence, partially completed with the completed part and remaining acceptance conditions, blocked with exact cause and resume condition, deferred, and unknown when evidence or access is insufficient. Differentiate completed implementation, actual data, deployment, observed operation and investment approval. Never promote historical proof into current live proof or mark a required unfinished part complete.",
+      "priorityAndConflict": "Compare ledger, newer state, handoff, receipts and the original relevant user confirmation using version and timestamps. A stale or conflicting summary is not proof of noncompletion: read the specific authoritative receipt when accessible and preserve conflicts and earlier failures. Correct a mistaken report explicitly; do not silently erase or rewrite history.",
+      "repeatGate": "Do not repeat completed work, tests, searches, screenshots, requests for inputs, login attempts, deployments or consumed one-shot authorizations solely to reconstruct context or because a user says continue. Reuse retained evidence when relevant code, data, dependencies, environment, time validity and scope remain unchanged. A genuine change, evidence conflict or explicit request can justify only the necessary affected check; record why and do not assume an expired approval revives.",
+      "granularity": "Treat a completed subtask as complete even if the parent remains open; name only the still-missing fields. Existing partial account and device confirmation must not be represented as no account input or no device confirmation. Protect private accounts, tokens and detailed holdings from the public rules repository.",
+      "operation": "Before each eligible item, record or consult its ID, actual scope, evidence reference and as-of, current status, changes since evidence, next action, blockers and any approval remaining in the existing ledger or current-state summary. Continue all independent authorized unfinished work without another prompt. If none is actionable, report exact inputs or permissions that would unblock it once.",
+      "limits": "This GPT_ONLY procedure is not a software-enforced lock, does not grant external actions or modify investment policy, numerical rules, runtime snapshots or permissions, and does not assert project settings have been updated."
+    },
+    "revisionHistory": [
+      {
+        "revision": "2.1.0",
+        "sourceVersion": "1.1.3",
+        "sourceBlobSha": "7774021c8b992fed7e20b4cf1d9a87d829eaada8",
+        "status": "superseded-by-2.1.1",
+        "reason": "User-requested completion reconciliation and evidence reuse clarification; existing policies and approval boundaries retained."
+      }
+    ]
   }
 }
