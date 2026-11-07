@@ -1,7 +1,7 @@
 {
   "schema": "GPT_ETF_RULES_V1",
-  "version": "1.1.5",
-  "updatedAt": "2026-11-06",
+  "version": "1.1.6",
+  "updatedAt": "2026-11-07",
   "sourceFiles": {
     "fullRaw": "FULL_RAW chunk set + manifest",
     "marketIndex": "latest.json",
@@ -499,6 +499,35 @@
       "requiredData": "Accessible current source, relevant item evidence and original approval scope; unknowns remain labelled.",
       "validation": "JSON parse; unchanged non-workflow policy and prior history; unique update IDs and dependency audit; instruction/rule version and digest agreement; scoped contradiction and authority review. No software-runtime or project-settings verification implied.",
       "status": "active"
+    },
+    {
+      "id": "U014",
+      "date": "2026-11-07",
+      "classification": "RULE",
+      "level": "L3_TACTICAL",
+      "strength": "GATE",
+      "action": "MODIFY",
+      "purpose": "Deliver a concise handoff file when preparing a conversation move without repeating research or creating files after every step.",
+      "reason": "User requested that the established conversation-move handoff-file practice be made explicit while minimizing resource use.",
+      "dependsOn": [
+        "foundationRules",
+        "ruleGovernance",
+        "U011",
+        "U012",
+        "U013"
+      ],
+      "affects": [
+        "projectWorkflow.handoff",
+        "projectWorkflow.revision",
+        "projectWorkflow.instructionRevision",
+        "projectWorkflow.instructionCopy"
+      ],
+      "change": "WORKFLOW_001 2.1.3 adds conversation-move TXT delivery using the existing ledger/current state and evidence, narrow updates, explicit unknowns, reuse when unchanged and a chat fallback if file delivery is unavailable.",
+      "implementation": "GPT_ONLY",
+      "replacesOrReplacedBy": "Extends the handoff procedure of 2.1.2; retains its workflow boundaries, all prior history and all non-workflow policies.",
+      "requiredData": "Accessible current ledger/state and retained task evidence; mark unavailable or unverified inputs. This rule does not create access or capacity telemetry.",
+      "validation": "JSON parse, unchanged non-workflow policy and prior history, update-ID/dependency audit, instruction version/digest agreement, scoped contradiction and authority review, remote readback. No runtime, actual project-settings or future delivery verification implied.",
+      "status": "active"
     }
   ],
   "projectWorkflow": {
@@ -507,8 +536,8 @@
     "level": "L3_TACTICAL",
     "scope": "Project entry, delivery scope, evidence reuse, progress reporting and handoff only; no investment-policy, numeric-formula or live-deployment authorization changes",
     "status": "active",
-    "revision": "2.1.2",
-    "instructionRevision": "PROJECT_ENTRY_V2_3_20261106",
+    "revision": "2.1.3",
+    "instructionRevision": "PROJECT_ENTRY_V2_4_20261107",
     "priority": "Current explicit user instructions and higher-priority platform instructions prevail. This reference document grants no independent tool, account, trading or deployment permission. Workflow changes cannot silently rewrite L0-L2 policies.",
     "start": [
       "A phase is one agreed work package, not a conversation turn or substep. Verify the current gpt-rules.json version, Git blob SHA, source and time at the first check of a new session, a sign of rule changes, or an explicit synchronization/rule-change request; initially read the full source. Substeps and continue messages within the same package are not new verification triggers; reuse the checked time/hash subject to the following provenance and pre-write rules.",
@@ -568,7 +597,8 @@
     "handoff": [
       "Preserve original completed, failed and deferred records. Supersede or retire outdated instructions with replacement/reason rather than erasing history; the current-state summary need not reproduce all past ledgers.",
       "Cross-conversation reconciliation is supplementary and occurs only with available authorized access. Daily/background reconciliation requires an actually configured and observed automation; none is created by storing this rule.",
-      "Apply the concise instruction copy to actual project settings or coding workspace guidance only when explicitly requested. During ordinary work, check the applicable copy and relevant differences, not every configuration surface. Record each surface separately: server save, settings update, rule load and behavioral compliance are different facts."
+      "Apply the concise instruction copy to actual project settings or coding workspace guidance only when explicitly requested. During ordinary work, check the applicable copy and relevant differences, not every configuration surface. Record each surface separately: server save, settings update, rule load and behavioral compliance are different facts.",
+      "When preparing a conversation move, provide the user a concise downloadable TXT handoff file using the existing canonical ledger, CURRENT_STATE and retained evidence. Reconcile only relevant changes and material gaps; do not reconstruct all history, repeat unchanged checks, or create a competing ledger. Include the verified baseline commit, relevant rule/version and source locations with as-of, completed work and evidence, unfinished/deferred/blocked items, authorization scope and any explicit consumption, actual save/deployment status, and next action. Label inaccessible or unverified items rather than filling them in. Reuse an existing matching handoff when nothing material changed; ordinary step completion or every analysis does not require a new file. Confirm file creation and attachment/link availability separately from server or settings synchronization. If file creation or delivery is unavailable, provide the same concise handoff in chat and explain the limitation. Do not claim to measure conversation capacity or an 80-percent threshold without an actual supported measurement. Preserve privacy and actual authorization boundaries."
     ],
     "enforcementLimit": "Project instructions and AGENTS.md can guide behavior but do not guarantee perfect compliance or synchronize every session. Confirm loaded instructions and the status block with a small read-only new-session check; do not claim a software-enforced guard exists unless implemented and tested.",
     "privacy": "Do not publish private holdings, account information, tokens or conversation contents in the public rules repository.",
@@ -590,10 +620,10 @@
       }
     ],
     "instructionCopy": {
-      "path": "project-instructions/PROJECT_ENTRY_V2_3_20261106_COPY.txt",
-      "sha256": "c09103971b27eef7bd51b8d5b7dda0ed145928f83ac98ae6f8d47af586f27f46",
+      "path": "project-instructions/PROJECT_ENTRY_V2_4_20261107_COPY.txt",
+      "sha256": "441a5bc8e08ca7a8810b8970e45eca6262fc1f38f5cba1eddafe810e16f62022",
       "purpose": "Complete Korean project workflow text referencing server detailed policy; manual settings replacement only when explicitly requested.",
-      "scopeNote": "Aligned with server 1.1.5 / WORKFLOW_001 2.1.2, including 2.1.1 completion reconciliation. Prior V2_2 copy remains historical in Git and is not the current copy. Server save does not update project settings, workspace instructions, runtime snapshots or guarantee compliance."
+      "scopeNote": "Aligned with server 1.1.6 / WORKFLOW_001 2.1.3, including concise handoff file delivery when preparing a conversation move. Prior V2_3 copy remains historical in Git and is not the current copy. Server save does not update project settings, workspace instructions, runtime snapshots or guarantee compliance."
     },
     "completionReconciliation": {
       "classification": "RULE",
@@ -623,6 +653,14 @@
         "instructionRevision": "PROJECT_ENTRY_V2_2_20261018",
         "status": "superseded-by-2.1.2",
         "reason": "Clarify work-package verification, scoped entry checks, evidence lookup and approval lifetime; remove numeric batch minimum; align Korean copy. Completion reconciliation and safety/authority policies retained."
+      },
+      {
+        "revision": "2.1.2",
+        "sourceVersion": "1.1.5",
+        "sourceBlobSha": "5a0ab654ed62532a907ced9d6fae21034a9c0a95",
+        "instructionRevision": "PROJECT_ENTRY_V2_3_20261106",
+        "status": "superseded-by-2.1.3",
+        "reason": "User-requested lightweight conversation-move handoff file delivery; existing ledger/evidence reuse, policies and authorization boundaries retained."
       }
     ]
   }
